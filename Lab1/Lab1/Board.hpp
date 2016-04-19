@@ -1,15 +1,17 @@
 
 #include <iostream>
 #include <vector>
-#include "PuzzleNode.hpp"
+#include "Tile.hpp"
 class Board
 {
     public:
-        std::vector<PuzzleNode> nodes;
+        std::vector<Tile> tiles;
         Board();
         void print();
     
+    
     private:
+        void initTiles();
     
     
     

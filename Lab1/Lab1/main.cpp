@@ -11,11 +11,9 @@
 int main(int argc, const char * argv[]) {
     // insert code here...
     
-    Board board;
-    board.print();
+    Board* board  = new Board();
     
-    
-    
+    board->print();
     return 0;
     
 }
