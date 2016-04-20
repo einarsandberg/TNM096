@@ -8,10 +8,11 @@ class Board
         std::vector<Tile> tiles;
         Board();
         void print();
+        void initTiles(std::vector<int> values);
     
     
     private:
-        void initTiles();
+    
     
     
     
