@@ -48,18 +48,6 @@ public class Board
 		return -1;
 	}
 
-	public int getHoleIndex()
-	{
-		for (int i = 0; i < tiles.size(); i++)
-		{
-			if (tiles.get(i).getValue() == 0)
-			{
-				return i;
-			}
-		}
-		return -1;
-	}
-
 	public List<Tile> getMoveableTiles(Tile theTile)
 	{
 		int pos = getTileIndex(theTile.getValue());
@@ -160,15 +148,11 @@ public class Board
 		h = val;
 	}
 
-
 	public void print()
 	{
 		for (int i = 0; i < tiles.size(); i++)
 		{
-			//System.out.print(tiles.get(i).getValue() + " ");
-
 		   System.out.print(tiles.get(i).getValue() + " ");
-		   //System.out.println(tiles.get(i).getValue() + " ");
 		    if (i == 2   || i == 5 || i == 8)
 		        System.out.println("");
 		}
