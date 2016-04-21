@@ -3,11 +3,16 @@ import java.net.*;
 import java.util.StringTokenizer;
 import java.lang.Object;
 import java.util.*;
+
+/* Solves 8-puzzle using A* search, with either h=number of tiles in wrong place,
+or h= manhattan distance*/
+
 public class Search
 {
 	Board startBoard;
 	Board endBoard;
 	Board currBoard;
+	boolean useManhattanDist = false;
 	private static final int SIZE = 100;
 	//private List<Board> visited;
 	private HashSet<Board> visited = new HashSet<Board>();
@@ -30,7 +35,7 @@ public class Search
 	public void init()
 	{
 		List<Tile> tilesStart = new ArrayList<Tile>();
-		/*tilesStart.add(new Tile(1));
+		tilesStart.add(new Tile(1));
 		tilesStart.add(new Tile(0)); // value 0 is the empty space
 		tilesStart.add(new Tile(2));
 		tilesStart.add(new Tile(4));
@@ -38,7 +43,7 @@ public class Search
 		tilesStart.add(new Tile(3));
 		tilesStart.add(new Tile(7));
 		tilesStart.add(new Tile(8));
-		tilesStart.add(new Tile(6));*/
+		tilesStart.add(new Tile(6));
 
 		/*tilesStart.add(new Tile(8));
 		tilesStart.add(new Tile(6)); 
@@ -50,7 +55,7 @@ public class Search
 		tilesStart.add(new Tile(0));
 		tilesStart.add(new Tile(1));*/
 
-		tilesStart.add(new Tile(6));
+		/*tilesStart.add(new Tile(6));
 		tilesStart.add(new Tile(4)); 
 		tilesStart.add(new Tile(7));
 		tilesStart.add(new Tile(8));
@@ -58,7 +63,7 @@ public class Search
 		tilesStart.add(new Tile(0));
 		tilesStart.add(new Tile(3));
 		tilesStart.add(new Tile(2));
-		tilesStart.add(new Tile(1));
+		tilesStart.add(new Tile(1));*/
 
 
 		List<Tile> tilesEnd = new ArrayList<Tile>();
@@ -76,7 +81,21 @@ public class Search
 		endBoard = new Board(tilesEnd);
 
 		startBoard.setG(0);
-		startBoard.setH(tilesOutOfPosition(startBoard));
+		if (useManhattanDist)
+		{
+			int distance = 0;
+			for (int j = 0; j < startBoard.getTiles().size(); j++)
+			{
+				distance+=manhattanDistance(startBoard.getTileIndex(startBoard.getTileByValue(j).getValue()), endBoard.getTileIndex(startBoard.getTileByValue(j).getValue()));
+			}
+			startBoard.setH(distance);
+			
+		}
+		else
+		{
+			startBoard.setH(tilesOutOfPosition(startBoard));
+		}
+		
 	}
 	// first heuristic
 	private int tilesOutOfPosition(Board b)
@@ -137,13 +156,30 @@ public class Search
 			for (int i = 0; i < neighbours.size(); i++)
 			{
 				Board b = createBoard(neighbours.get(i));
-				b.setH(tilesOutOfPosition(b));
+				if (useManhattanDist)
+				{
+					int distance = 0;
+					for (int j = 0; j < b.getTiles().size(); j++)
+					{
+						distance+=manhattanDistance(b.getTileIndex(b.getTileByValue(j).getValue()), endBoard.getTileIndex(b.getTileByValue(j).getValue()));
+					}
+					b.setH(distance);
+				}
+				else
+				{
+					b.setH(tilesOutOfPosition(b));
+				}
 				b.setG(currBoard.getG()+1);
 				addToQueue(b);
 			}
 		}
 
 	}
+	static int manhattanDistance(int a, int b) 
+	{
+	        return Math.abs(a / 3 - b / 3) + Math.abs(a % 3 - b % 3);
+	}	
+	
 	public static void main(String[] args)
 	{
 		Search search = new Search();

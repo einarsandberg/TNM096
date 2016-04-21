@@ -16,7 +16,6 @@ public class Board
 		{
 			tiles.add(theTiles.get(i));
 		}
-		g = 0;
 	}
 
 	public List<Tile> getTiles()
