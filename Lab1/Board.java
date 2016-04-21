@@ -11,7 +11,12 @@ public class Board
 	private int g;
 	public Board(List<Tile> theTiles)
 	{
-		tiles = new ArrayList<Tile>(theTiles);
+		tiles = new ArrayList<Tile>();
+		for (int i = 0; i < theTiles.size(); i++)
+		{
+			tiles.add(theTiles.get(i));
+		}
+		g = 0;
 	}
 
 	public List<Tile> getTiles()
@@ -55,17 +60,6 @@ public class Board
 		return -1;
 	}
 
-	/*public Tile getTileByPosition(int thePosition)
-	{
-		for (int i = 0; i < tiles.size(); i++)
-		{
-			if (tiles.get(i).getPosition() == thePosition)
-			{
-				return tiles.get(i);
-			}
-		}
-		return null;
-	}*/
 	public List<Tile> getMoveableTiles(Tile theTile)
 	{
 		int pos = getTileIndex(theTile.getValue());
@@ -180,6 +174,19 @@ public class Board
 		}
 		System.out.println("");
 	}
+	@Override
+	  public boolean equals(Object o) {
+	    if (this == o) return true;
+	    if (o == null || getClass() != o.getClass()) return false;
+
+	    Board board = (Board) o;
+	    return Arrays.equals(tiles.toArray(new Tile[tiles.size()]), board.getTiles().toArray(new Tile[board.getTiles().size()]));
+	  }
+	  
+	  @Override
+	  public int hashCode() {
+	    return Arrays.hashCode(tiles.toArray(new Tile[tiles.size()]));
+	  }
 
 
 
