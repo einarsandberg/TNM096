@@ -35,7 +35,7 @@ public class Search
 	public void init()
 	{
 		List<Tile> tilesStart = new ArrayList<Tile>();
-		tilesStart.add(new Tile(1));
+		/*tilesStart.add(new Tile(1));
 		tilesStart.add(new Tile(0)); // value 0 is the empty space
 		tilesStart.add(new Tile(2));
 		tilesStart.add(new Tile(4));
@@ -43,7 +43,7 @@ public class Search
 		tilesStart.add(new Tile(3));
 		tilesStart.add(new Tile(7));
 		tilesStart.add(new Tile(8));
-		tilesStart.add(new Tile(6));
+		tilesStart.add(new Tile(6));*/
 
 		/*tilesStart.add(new Tile(8));
 		tilesStart.add(new Tile(6)); 
@@ -55,15 +55,15 @@ public class Search
 		tilesStart.add(new Tile(0));
 		tilesStart.add(new Tile(1));*/
 
-		/*tilesStart.add(new Tile(6));
-		tilesStart.add(new Tile(4)); 
-		tilesStart.add(new Tile(7));
 		tilesStart.add(new Tile(8));
-		tilesStart.add(new Tile(5));
-		tilesStart.add(new Tile(0));
-		tilesStart.add(new Tile(3));
+		tilesStart.add(new Tile(1)); 
 		tilesStart.add(new Tile(2));
-		tilesStart.add(new Tile(1));*/
+		tilesStart.add(new Tile(0));
+		tilesStart.add(new Tile(4));
+		tilesStart.add(new Tile(3));
+		tilesStart.add(new Tile(7));
+		tilesStart.add(new Tile(6));
+		tilesStart.add(new Tile(5));
 
 
 		List<Tile> tilesEnd = new ArrayList<Tile>();
@@ -86,7 +86,8 @@ public class Search
 			int distance = 0;
 			for (int j = 0; j < startBoard.getTiles().size(); j++)
 			{
-				distance+=manhattanDistance(startBoard.getTileIndex(startBoard.getTileByValue(j).getValue()), endBoard.getTileIndex(startBoard.getTileByValue(j).getValue()));
+				distance+=manhattanDistance(startBoard.getTileIndex(startBoard.getTileByValue(j).getValue()), 
+					endBoard.getTileIndex(startBoard.getTileByValue(j).getValue()));
 			}
 			startBoard.setH(distance);
 			
@@ -173,11 +174,12 @@ public class Search
 				addToQueue(b);
 			}
 		}
+		System.out.println(visited.size());
 
 	}
 	static int manhattanDistance(int a, int b) 
 	{
-	        return Math.abs(a / 3 - b / 3) + Math.abs(a % 3 - b % 3);
+	    return Math.abs(a / 3 - b / 3) + Math.abs(a % 3 - b % 3);
 	}	
 	
 	public static void main(String[] args)
