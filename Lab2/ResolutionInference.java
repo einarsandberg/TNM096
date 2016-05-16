@@ -14,12 +14,11 @@ public class ResolutionInference
 		literals2 = new ArrayList<String>();
 
 		literals1.add("A");
-		literals1.add("B");
 		literals1.add("C");
-		literals1.add("-D");
-		literals1.add("A");
-		
+		literals1.add("B");
+
 		literals2.add("-A");
+		literals2.add("-B");
 		literals2.add("-B");
 		literals2.add("-A");
 		literals2.add("K");
@@ -48,9 +47,8 @@ public class ResolutionInference
 	{
 		List<String> c1Literals = c1.getLiterals();
 		List<String> c2Literals = c2.getLiterals();
-
 		List<String> res = new ArrayList<String>();
-
+		boolean done = false;
 		for (Iterator<String> it = c1Literals.iterator(); it.hasNext();)
 		{
 			String literal = it.next();
@@ -61,12 +59,14 @@ public class ResolutionInference
 				{
 					it.remove();
 					it2.remove();
+					done = true;
 					break;
 				}
-
 			}
+			if (done)
+				break;
 		}
-		
+
 		res.addAll(c1Literals);
 		res.addAll(c2Literals);
 		Clause resClause = new Clause(res);
