@@ -28,7 +28,11 @@ public class ResolutionInference
 
 		c1 = new Clause(literals1);
 		c2 = new Clause(literals2);
-
+		System.out.println("First clause: ");
+		c1.print();
+		System.out.println("");
+		System.out.println("Second clause: ");
+		c2.print();
 		run();
 	}
 
@@ -36,9 +40,11 @@ public class ResolutionInference
 	{
 		List<String> resolvents = new ArrayList<String>();
 		Clause resClause = getResolvents();
-
-		for (int i = 0; i <  resClause.getLiterals().size(); i++)
-			System.out.println(resClause.getLiterals().get(i));
+		System.out.println("");
+		System.out.println("Resolvent clause: ");
+		resClause.print();
+		/*for (int i = 0; i <  resClause.getLiterals().size(); i++)
+			System.out.println(resClause.getLiterals().get(i));*/
 	}
 
 	private Clause getResolvents()
