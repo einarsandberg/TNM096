@@ -13,12 +13,19 @@ public class ResolutionInference
 		literals1 = new ArrayList<String>();
 		literals2 = new ArrayList<String>();
 
-		literals1.add("A");
 		literals1.add("B");
+		literals1.add("A");
+		literals1.add("C");
+		literals1.add("-D");
+		literals1.add("A");
 		
+		literals2.add("F");
+		literals2.add("A");
 		literals2.add("-A");
+		literals2.add("C");
 		literals2.add("D");
-		
+		literals2.add("K");
+
 		c1 = new Clause(literals1);
 		c2 = new Clause(literals2);
 
@@ -27,10 +34,14 @@ public class ResolutionInference
 
 	private void run()
 	{
-		getResolvents();
+		List<String> resolvents = new ArrayList<String>();
+		Clause resClause = getResolvents();
+
+		for (int i = 0; i <  resClause.getLiterals().size(); i++)
+			System.out.println(resClause.getLiterals().get(i));
 	}
 
-	private void getResolvents()
+	private Clause getResolvents()
 	{
 		List<String> c1Literals = c1.getLiterals();
 		List<String> c2Literals = c2.getLiterals();
@@ -40,23 +51,26 @@ public class ResolutionInference
 
 		for (int i = 0; i < c1Literals.size(); i++)
 		{
-
 			for (int j = 0; j < c2Literals.size(); j++)
 			{
-				if (containsComplementaryLiteral(c1Literals.get(i), c1Literals.get(j)))
+				if (containsComplementaryLiteral(c1Literals.get(i), c2Literals.get(j)))
 				{
-					complementaryLiterals.add(c1Literals.get(i));
+					c1Literals.remove(i);
+					c2Literals.remove(j);
 				}
 			}
 		}
-		for (int i = 0; i < complementaryLiterals.size(); i++)
-		{
-			System.out.println(complementaryLiterals.get(i));
-		}
+
+		res.addAll(c1Literals);
+		res.addAll(c2Literals);
+		Clause resClause = new Clause(res);
+
+		return resClause;
 
 	}
 	private boolean containsComplementaryLiteral(String s1, String s2)
 	{
+			
 		if (s1.equals("-" + s2) || s2.equals("-" + s1))
 		{
 			return true;
