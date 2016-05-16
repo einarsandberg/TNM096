@@ -66,19 +66,7 @@ public class ResolutionInference
 
 			}
 		}
-
-		/*for (int i = 0; i < c1Literals.size(); i++)
-		{
-			for (int j = 0; j < c2Literals.size(); j++)
-			{
-				if (containsComplementaryLiteral(c1Literals.get(i), c2Literals.get(j)))
-				{
-					c1Literals.remove(i);
-					c2Literals.remove(j);
-				}
-			}
-		}*/
-
+		
 		res.addAll(c1Literals);
 		res.addAll(c2Literals);
 		Clause resClause = new Clause(res);
