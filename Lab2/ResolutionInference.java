@@ -13,17 +13,15 @@ public class ResolutionInference
 		literals1 = new ArrayList<String>();
 		literals2 = new ArrayList<String>();
 
-		literals1.add("B");
 		literals1.add("A");
+		literals1.add("B");
 		literals1.add("C");
 		literals1.add("-D");
 		literals1.add("A");
 		
-		literals2.add("F");
-		literals2.add("A");
 		literals2.add("-A");
-		literals2.add("C");
-		literals2.add("D");
+		literals2.add("-B");
+		literals2.add("-A");
 		literals2.add("K");
 
 		c1 = new Clause(literals1);
@@ -43,8 +41,7 @@ public class ResolutionInference
 		System.out.println("");
 		System.out.println("Resolvent clause: ");
 		resClause.print();
-		/*for (int i = 0; i <  resClause.getLiterals().size(); i++)
-			System.out.println(resClause.getLiterals().get(i));*/
+
 	}
 
 	private Clause getResolvents()
@@ -53,9 +50,24 @@ public class ResolutionInference
 		List<String> c2Literals = c2.getLiterals();
 
 		List<String> res = new ArrayList<String>();
-		List<String> complementaryLiterals = new ArrayList<String>();
 
-		for (int i = 0; i < c1Literals.size(); i++)
+		for (Iterator<String> it = c1Literals.iterator(); it.hasNext();)
+		{
+			String literal = it.next();
+			for (Iterator<String> it2 = c2Literals.iterator(); it2.hasNext();)
+			{
+				String literal2 = it2.next();
+				if (containsComplementaryLiteral(literal, literal2))
+				{
+					it.remove();
+					it2.remove();
+					break;
+				}
+
+			}
+		}
+
+		/*for (int i = 0; i < c1Literals.size(); i++)
 		{
 			for (int j = 0; j < c2Literals.size(); j++)
 			{
@@ -65,7 +77,7 @@ public class ResolutionInference
 					c2Literals.remove(j);
 				}
 			}
-		}
+		}*/
 
 		res.addAll(c1Literals);
 		res.addAll(c2Literals);
