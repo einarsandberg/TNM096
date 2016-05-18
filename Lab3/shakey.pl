@@ -6,16 +6,23 @@ act(goBetweenRooms(Room, Room2),
     [in(shakey, Room2)] % add
     ).
 
-act(switchLight(Switch),
-    [in(shakey, Room), in(Switch, Room), status(Switch, on)],
+act(switchLightOff(Switch),
+    [in(shakey, Room), in(Switch, Room), status(Switch, on), under(Box, yes)],
     [status(Switch, on)],
     [status(Switch, off)]
+    ).
+
+act(moveBox(Box),
+    [in(shakey, Room), in(Switch, Room), in(Box, Room), under(Box, no)],
+    [under(Box, no)],
+    [under(Box, yes)]
     ).
 
 goal_state(
     [
         in(shakey, room1),
         status(switch1, off)
+        %under(box1, yes)
         %in(box2, room2)
     ]
 
@@ -45,6 +52,7 @@ initial_state(
 
         in(switch1, room1),
         status(switch1, on),
+        %status(status1),
 
         in(switch2, room2),
         status(switch2, on),
@@ -53,6 +61,17 @@ initial_state(
         switch(switch2),
         switch(switch3),
         switch(switch4),
+
+        status(switch1, on),
+
+        under(box1, no),
+        under(box2, no),
+        under(box3, no),
+        under(box4, no),
+        box(box1),
+        box(box2),
+        box(box3),
+        box(box4),
 
         connection(room1, corridor),
         connection(room2, corridor),
