@@ -14,15 +14,15 @@ public class ResolutionInference
 		literals2 = new ArrayList<String>();
 
 		literals1.add("A");
-		literals1.add("B");
 		literals1.add("C");
-		literals1.add("D");
+		literals1.add("E");
 
-		literals2.add("C");
-		literals2.add("-D");
+		literals2.add("-C");
+		literals2.add("-B");
 		literals2.add("-A");
 		literals2.add("K");
-		literals2.add("B");
+
+		//literals2.add("F");
 		
 
 		c1 = new Clause(literals1);
@@ -40,7 +40,7 @@ public class ResolutionInference
 		List<String> resolvents = new ArrayList<String>();
 		Clause resClause = getResolvents();
 		System.out.println("");
-		System.out.println("Resolvent clause: ");
+		System.out.println("Result: ");
 		resClause.print();
 
 	}
@@ -51,6 +51,7 @@ public class ResolutionInference
 		List<String> c2Literals = c2.getLiterals();
 		List<String> res = new ArrayList<String>();
 		
+		boolean contains = false;
 		boolean done = false;
 
 		for (Iterator<String> it = c1Literals.iterator(); it.hasNext();)
@@ -63,8 +64,9 @@ public class ResolutionInference
 				{
 					it.remove();
 					it2.remove();
-					/*done = true;
-					break;*/
+					done = true;
+
+					contains = true;
 				}
 				//remove repeated literals
 				if (literal.equals(literal2))
@@ -73,17 +75,25 @@ public class ResolutionInference
 				}
 
 			}
-			/*if (done)
-				break;*/
+			if (done)
+				break;
+		}
+		if (!contains)
+		{
+			System.out.println("Bad formula");
+		}
+		else
+		{
+			res.addAll(c1Literals);
+			res.addAll(c2Literals);
 		}
 
-		res.addAll(c1Literals);
-		res.addAll(c2Literals);
+
 				
-		if (res.size() == 0 )
+		/*if (res.size() == 0 )
 		{
 			System.out.println("Contradictory formula");
-		}
+		}*/
 
 		return new Clause(res);
 
