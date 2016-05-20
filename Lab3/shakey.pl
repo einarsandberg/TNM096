@@ -1,88 +1,96 @@
-% actions
+act( goBetweenRooms(Room, Room2),
+    [in(shakey, Room), room(Room), room(Room2), connected(Room, Room2), on(shakey, floor)],
+    [in(shakey, Room)],
+    [in(shakey, Room2)]
+).
+act( switchLightOff(Switch, Box),
+    [in(shakey, Room), in(Switch, Room), lightOn(Switch), on(shakey, Box), in(Box, Room), under(Box, Switch)],
+    [lightOn(Switch)],
+    [lightOff(Switch)]
+).
 
-act(goBetweenRooms(Room, Room2),
-    [in(shakey, Room), connection(Room, Room2)], %prerequisites
-    [in(shakey, Room)], %delete
-    [in(shakey, Room2)] % add
+act( switchLightOn(Switch, Box),
+    [in(shakey, Room), in(Switch, Room), lightOff(Switch), on(shakey, Box), in(Box, Room), under(Box, Switch)],
+    [lightOff(Switch)],
+    [lightOn(Switch)]
+).
+
+act( pushBoxBetweenRooms(Box, Room, Room2),
+    [box(Box), in(shakey, Room), on(shakey, floor), in(Box, Room), connected(Room, Room2)],
+    [in(shakey, Room), in(Box, Room)],
+    [in(shakey, Room2), in(Box, Room2)]
+).
+
+act(moveBoxToSwitch(Box, Room),
+    [in(shakey, Room), in(Switch, Room), in(Box, Room), on(shakey, floor), notUnder(Box, Switch)],
+    [notUnder(Box, Switch)],
+    [under(Box, Switch)]
     ).
 
-act(switchLightOff(Switch),
-    [in(shakey, Room), in(Switch, Room), status(Switch, on), under(Box, yes)],
-    [status(Switch, on)],
-    [status(Switch, off)]
-    ).
 
-act(moveBox(Box),
-    [in(shakey, Room), in(Switch, Room), in(Box, Room), under(Box, no)],
-    [under(Box, no)],
-    [under(Box, yes)]
-    ).
+act( climbOnBox(Box),
+     [box(Box),on(shakey, floor), in(shakey, Room), in(Box, Room)],
+     [on(shakey, floor)],
+     [on(shakey, Box)]
+).
 
-goal_state(
+act( climbOffBox(Box),
+     [box(Box),on(shakey, Box), in(shakey, Room), in(Box, Room)],
+     [on(shakey, Box)],
+     [on(shakey, floor)]
+).
+
+goal_state( 
     [
         in(shakey, room1),
-        status(switch1, off)
-        %under(box1, yes)
-        %in(box2, room2)
-    ]
+        lightOff(switch1),
+        in(box2, room2)
+    ] 
+    ).
 
-    ).     
-
-initial_state(
-    [
-        
-        on(shakey, floor),
-        in(switch3, room3),
-        status(switch3, on),
-
-        in(switch4, room4),
-        status(switch4, on),
-
+initial_state( [
         in(shakey, room3),
+        in(box1, room1),
+        in(box2, room1),
+        in(box3, room1),
+        in(box4, room1),
+        
+        in(switch1, room1),
+        in(switch2, room2),
+        in(switch3, room3),
+        in(switch4, room4),
+        on(shakey, floor),
         room(room1),
         room(room2),
         room(room3),
         room(room4),
         room(corridor),
 
-        in(box1, room1),
-        in(box2, room1),
-        in(box3, room1),
-        in(box4, room1),
+        connected(room1, corridor),
+        connected(corridor, room1),
+        connected(room2, corridor),
+        connected(corridor, room2),
+        connected(room3, corridor),
+        connected(corridor, room3),
+        connected(room4, corridor),
 
-        in(switch1, room1),
-        status(switch1, on),
-        %status(status1),
+        notUnder(box1, switch1),
+        notUnder(box2, switch1),
+        notUnder(box3, switch1),
+        notUnder(box4, switch1),
 
-        in(switch2, room2),
-        status(switch2, on),
+        lightOn(switch1),
+        lightOn(switch2),
+        lightOn(switch3),
+        lightOn(switch4),
 
-        switch(switch1),
-        switch(switch2),
-        switch(switch3),
-        switch(switch4),
-
-        status(switch1, on),
-
-        under(box1, no),
-        under(box2, no),
-        under(box3, no),
-        under(box4, no),
         box(box1),
         box(box2),
         box(box3),
         box(box4),
 
-        connection(room1, corridor),
-        connection(room2, corridor),
-        connection(room3, corridor),
-        connection(room4, corridor),
-        connection(corridor, room1),
-        connection(corridor, room2),
-        connection(corridor, room3),
-        connection(corridor, room4)
-
-
-    ]
-
-    ).   
+        switch(switch1),
+        switch(switch2),
+        switch(switch3),
+        switch(switch4)
+    ]). 
